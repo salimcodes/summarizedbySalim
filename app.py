@@ -1,8 +1,12 @@
-key = "5c2af3356ca74a55971ee3e2f070a73d"
-endpoint = "https://sentimentalanalysisbysalim.cognitiveservices.azure.com"
-
 from azure.ai.textanalytics import TextAnalyticsClient
 from azure.core.credentials import AzureKeyCredential
+from dotenv import load_dotenv
+import requests, os, uuid, json
+from flask import Flask, redirect, url_for, request, render_template, session
+
+load_dotenv()
+key = os.getenv("LANGUAGE_KEY")
+endpoint = os.getenv("LANGUAGE_ENDPOINT")
 
 # Authenticate the client using your key and endpoint 
 def authenticate_client():
@@ -14,22 +18,24 @@ def authenticate_client():
 
 client = authenticate_client()
 
+app = Flask(__name__)
+
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
+
+@app.route('/', methods=['POST'])
 # Example method for summarizing text
-def sample_extractive_summarization(client):
+def index_post():
     from azure.core.credentials import AzureKeyCredential
     from azure.ai.textanalytics import (
         TextAnalyticsClient,
         ExtractSummaryAction
     ) 
+    original_text = request.form['text']
+    document = [original_text]
 
-    document = [
-        "The extractive summarization feature uses natural language processing techniques to locate key sentences in an unstructured text document. "
-        "These sentences collectively convey the main idea of the document. This feature is provided as an API for developers. " 
-        "They can use it to build intelligent solutions based on the relevant information extracted to support various use cases. "
-        "In the public preview, extractive summarization supports several languages. It is based on pretrained multilingual transformer models, part of our quest for holistic representations. "
-        "It draws its strength from transfer learning across monolingual and harness the shared nature of languages to produce models of improved quality and efficiency. "
-    ]
-
+    
     poller = client.begin_analyze_actions(
         document,
         actions=[
@@ -40,13 +46,10 @@ def sample_extractive_summarization(client):
     document_results = poller.result()
     for result in document_results:
         extract_summary_result = result[0]  # first document, first result
-        if extract_summary_result.is_error:
-            print("...Is an error with code '{}' and message '{}'".format(
-                extract_summary_result.code, extract_summary_result.message
-            ))
-        else:
-            print("Summary extracted: \n{}".format(
-                " ".join([sentence.text for sentence in extract_summary_result.sentences]))
-            )
+        summary = ([sentence.text for sentence in extract_summary_result.sentences])
 
-sample_extractive_summarization(client)
+    return render_template(
+        'results.html', 
+        document = document,
+        summary = summary
+        )

@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=7">
-    <meta name="description" content="A web app that reveals sentiment for reviews. Fully powered by Microsoft Azure">
+    <meta name="description" content="A web app that translates text between more than 30 languages. Fully powered by Microsoft Azure">
     <link rel="shortcut icon" href="https://pbs.twimg.com/profile_images/1476966230775013380/xPMaGY5H_400x400.jpg" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Salim Oyinlola's Sentiment Analyzer | An end-to-end AI project that determines whether inputted text is positive, negative or neutral</title>
+    <title>Salim Oyinlola's Translator | An end-to-end AI project that translates text between more than 30 languages</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter&family=Lexend+Deca:wght@400;700&display=swap');
 body{
@@ -105,7 +105,6 @@ form{
     font-family: 'Lexend Deca', sans-serif;
 }
 
-
 .action{
     display: flex;
     margin: 2em 0;
@@ -181,27 +180,35 @@ footer .socials a ion-icon{
     </style>    
 </head>
 <body id="body">
-    <div class="container">
+    <div class="container result">
         <span id="themeSwitcher"><ion-icon name="sunny-outline"></ion-icon></span>
         <main>
-            <h1><span>Salim's</span> Sentiment Analysis App</h1>
+            <h1><span>Salim's</span> Translation App</h1>
             <h2>Hey, Amigo!</h2>
-            <p>Enter the review that you want to know the sentiment for, and click Reveal!</p>
-            <form method="POST">
-                <div class="form__row text">
-                    <label for="text">Text</label>
-                    <textarea name="text" class="form-control" placeholder="Exter the text"></textarea>
+            <p>Here's your translated text</p>
+            <div class="action">
+                <div class="action__row text">
+                    <label for="text">Original Text</label>
+                    <p> {{ document }} </p>
                 </div>
-                <div class="form__row">
-                    <button type="submit" class="btn btn-success">Reveal!</button>
+                <div class="action__row text">
+                    <label for="text">Summarized Text</label>
+                    <p> {{ summary }} </p>
                 </div>
-            </form>
+            </div>
+    
+            <a href="{{ url_for('index') }}" class="tryAgain" id="tryAgain">Try another one!</a>
         </main>
     </div>
-
+    <footer>
+        <p>&copy; 2022 Salim Oyinlola</p>
+        <div class="socials">
+            <a href="https://twitter.com/salimoyinlola"><ion-icon name="logo-twitter"></ion-icon></a>
+            <a href="https://github.com/salimcodes"><ion-icon name="logo-github"></ion-icon></a>
+        </div>
+    </footer>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
 
     <script>
         const themeSwitcher = document.getElementById("themeSwitcher")
@@ -211,6 +218,7 @@ footer .socials a ion-icon{
             if(e.target.name = "sunny-outline"){
                 e.target.name = "moon"
                 body.classList.add("light")
+                document.getElementById("tryAgain").style.color = "hsl(277, 64%, 61%)"
             }else if(e.target.name = "moon"){
                 body.classList.remove("light")
                 e.target.name = "sunny-outline"
