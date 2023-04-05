@@ -27,7 +27,7 @@ We welcome any and all contributions! Here are some ways you can get started:
 
 - Commit and push
 
-Wait for pull request to be merged
+- Wait for pull request to be merged
 
 ## How to Install and Run the Project Locally
 
