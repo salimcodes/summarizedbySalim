@@ -3,7 +3,7 @@
 
 ## Description
 
-Welcome to my project! This is an artificial intelligence app made in Python and the Flask framework and fully powered by Microsoft Azure. It enables...
+Welcome to my project! This is an artificial intelligence app made in Python and the Flask framework and fully powered by Microsoft Azure. It produces a summary by extracting sentences from a document or text conversation.
 
 ### Contribution
 
