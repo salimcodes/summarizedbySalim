@@ -46,7 +46,8 @@ def index_post():
     document_results = poller.result()
     for result in document_results:
         extract_summary_result = result[0]  # first document, first result
-        summary = ([sentence.text for sentence in extract_summary_result.sentences])
+        # summary = ([sentence.text for sentence in extract_summary_result.sentences])
+        summary = extract_summary_result
 
     return render_template(
         'results.html', 
