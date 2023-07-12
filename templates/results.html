@@ -23,6 +23,10 @@
     color: hsl(233, 72%, 17%);
     background: #FFF;
 }
+.dark{
+    color: #FFF;
+    background: hsl(233, 47%, 7%);
+}
 *{
     box-sizing: border-box;
 }
@@ -103,6 +107,7 @@ form{
     color: #FFF;
     font-weight: 700;
     font-family: 'Lexend Deca', sans-serif;
+    cursor: pointer;
 }
 
 .action{
@@ -181,7 +186,7 @@ footer .socials a ion-icon{
 </head>
 <body id="body">
     <div class="container result">
-        <span id="themeSwitcher"><ion-icon name="sunny-outline"></ion-icon></span>
+        <span id="themeSwitcher"><ion-icon name="sunny-outline"></ion-icon name="moon"></span>
         <main>
             <h1><span>Salim's</span> Summarizer App</h1>
             <h2>Hey, Amigo!</h2>
@@ -214,15 +219,20 @@ footer .socials a ion-icon{
     <script>
         const themeSwitcher = document.getElementById("themeSwitcher")
         const body = document.getElementById("body")
+
         themeSwitcher.addEventListener("click", (e) => {
-            console.log("kjk");
-            if(e.target.name = "sunny-outline"){
+            console.log("testing2");
+            if(e.target.name === "sunny-outline"){
+                console.log("change to moon")
                 e.target.name = "moon"
                 body.classList.add("light")
-                document.getElementById("tryAgain").style.color = "hsl(277, 64%, 61%)"
-            }else if(e.target.name = "moon"){
-                body.classList.remove("light")
+                body.classList.remove("dark")
+                // document.getElementById("tryAgain").style.color = "hsl(277, 64%, 61%)"
+            } else {
+                console.log("change to sun-light")
                 e.target.name = "sunny-outline"
+                body.classList.add("dark")
+                body.classList.remove("light")
             }
         })
     </script>
