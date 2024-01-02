@@ -8,6 +8,7 @@ load_dotenv()
 key = os.getenv("LANGUAGE_KEY")
 endpoint = os.getenv("LANGUAGE_ENDPOINT")
 
+
 #  Authenticate the client using your key and endpoint 
 def authenticate_client():
     ta_credential = AzureKeyCredential(key)
